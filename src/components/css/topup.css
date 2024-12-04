@@ -1,0 +1,150 @@
+.topup-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 20px;
+    box-sizing: border-box;
+    margin-bottom: 100px;
+  }
+  
+  .sidebar {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 25px;
+  }
+  
+  .payment-option {
+    background: white;
+    color: black;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .payment-option img {
+    width: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .payment-option p {
+    font-size: 15px;
+    margin: 0;
+  }
+  
+  .payment-option:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+  }
+  
+  .content-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 115px;
+  }
+  
+  .page-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin-top: 20px;
+  }
+  
+  .page-title span {
+    color: gray;
+    font-size: 16px;
+  }
+  
+  .payment-content {
+    background: #ffe600;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .main-icon {
+    width: 100px;
+  }
+  
+  .input-box, .input-file {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    font-family: "prompt";
+  }
+
+  .confirm-button.disabled {
+    background: gray;
+    padding: 10px 20px;
+    color: rgb(219, 219, 219);
+    cursor: not-allowed;
+    font-weight: bold;
+    font-family: 'prompt';
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+  
+  .confirm-button:not(:disabled) {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: white;
+    color: #2b2b2b;
+    font-weight: bold;
+    font-family: 'prompt';
+    font-size: 15px;
+    cursor: pointer;
+  }
+  
+  .confirm-button:not(:disabled):hover {
+    background: #2b2b2b;
+    color: white;
+    transform: scale(0.98);
+    transition: transform 0.3s ease;
+  }
+  
+  .uploaded-file {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f4f4f4;
+    padding: 0 10px;
+    border-radius: 8px;
+    margin: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+
+  
+  .remove-file-button {
+    background: rgb(234, 234, 234);
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    font-size: 14px;
+    width: 24px;
+    height: 24px;
+    font-weight: bold;
+  }
+
+.remove-file-button:hover{
+    background-color: rgb(223, 223, 217);
+    transform: scale(0.98);
+    transition: transform 0.3s ease;
+}
