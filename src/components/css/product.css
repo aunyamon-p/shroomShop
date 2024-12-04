@@ -116,4 +116,15 @@
   
   .buy-button:hover {
     background-color: #ffe600;
+    transform: scale(0.98);
+    transition: transform 0.3s ease;
+  }
+
+  .quantity-btn:disabled{
+    background: #a89806;
+    color: rgb(0, 0, 0);
+    cursor: not-allowed;
+    font-weight: bold;
+    font-family: 'prompt';
+    border: none;
   }

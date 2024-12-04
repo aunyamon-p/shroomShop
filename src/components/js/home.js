@@ -89,6 +89,7 @@ function Home() {
         <div className="recommend-content">
           {recommendedProducts.length > 0 ? (
             recommendedProducts.map((product) => (
+              
               <a href='/product' onClick={() => handleProductClick(product)}>
                 <button key={product.id} className="product-box">
                 <img

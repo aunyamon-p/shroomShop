@@ -9,7 +9,9 @@ function Product() {
   const [quantity, setQuantity] = useState(1);
 
   const handleIncrease = () => {
-    setQuantity((prev) => prev + 1);
+    if (quantity < product.stock) {
+      setQuantity((prev) => prev + 1);
+    }
   };
 
   const handleDecrease = () => {
@@ -47,14 +49,14 @@ function Product() {
             <span style={{ float: "right", color: "#fff" }}>เหลือ {product.stock} ชิ้น</span>
           </div>
           <div className="quantity">
-            <button className="quantity-btn" onClick={handleDecrease}>-</button>
+            <button className="quantity-btn" onClick={handleDecrease} disabled={quantity <= 1} >-</button>
             <input
               type="text"
               value={quantity}
               readOnly
               className="quantity-input"
             />
-            <button className="quantity-btn" onClick={handleIncrease}>+</button>
+            <button className="quantity-btn" onClick={handleIncrease} disabled={quantity >= product.stock}>+</button>
           </div>
           <button className="buy-button" onClick={handleBuy}>สั่งซื้อสินค้า</button>
         </div>
