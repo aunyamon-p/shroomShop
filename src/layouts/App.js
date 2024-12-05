@@ -63,14 +63,18 @@ function App() {
     setDropdownOpen((prev) => !prev);
   };
 
-  const handleRestrictedAccess = (event, path) => {
+  const handleRestrictedAccess = (event, path, state = {}) => {
     event.preventDefault();
     if (loggedInUser) {
-      navigate(path);
+      navigate(path, { state });  // ส่งค่า state ไปด้วย
     } else {
       openLoginModal();
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [navigate]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {

@@ -38,9 +38,14 @@ function Home() {
 
   const recommendedProducts = products.filter((product) => product.recommend === "yes");
 
-  const handleProductClick = (product) => {
-    navigate("/product", { state: { product } });
+  const handleProductClick = (product, e) => {
+    e.preventDefault();
+    console.log('Selected product:', product);
+    handleRestrictedAccess(e, '/product', { product });  // ส่ง product ไปยังหน้า /product
   };
+  
+  
+  
 
   return (
     <div className="Home">
@@ -79,7 +84,7 @@ function Home() {
         </button>
         <button className="htrbtn">
           <a href="/buyhistory" onClick={(e) => handleRestrictedAccess(e, '/buyhistory')}>
-            <img src={history} className="history" />
+            <img src={history} className="history" alt="history"/>
           </a>
         </button>
       </div>
@@ -89,9 +94,8 @@ function Home() {
         <div className="recommend-content">
           {recommendedProducts.length > 0 ? (
             recommendedProducts.map((product) => (
-              
-              <a href='/product' onClick={() => handleProductClick(product)}>
-                <button key={product.id} className="product-box">
+    
+                <button onClick={(e) => handleProductClick(product, e)} key={product.id} className="product-box">
                 <img
                   src={`http://localhost:5000/assets${product.image}`}
                   alt={product.name}
@@ -101,7 +105,7 @@ function Home() {
                 <div className="product-price">{product.price}฿</div>
                 <button className="order-button">สั่งซื้อสินค้า</button>
                 <div className="product-stock">คงเหลือ {product.stock} ชิ้น</div>
-              </button></a>
+              </button>
             ))
           ) : (
             <p>กำลังโหลดข้อมูลสินค้า...</p>

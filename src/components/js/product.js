@@ -5,7 +5,7 @@ import "../css/product.css";
 
 function Product() {
   const location = useLocation();
-  const { product } = location.state || {};
+  const { product } = location.state || {}; 
   const [quantity, setQuantity] = useState(1);
 
   const handleIncrease = () => {

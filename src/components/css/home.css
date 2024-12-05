@@ -86,13 +86,12 @@
     font-size: 25px;
   }
 
-  .recommend a{
-    text-decoration: none;
+  .recommend button{
     margin-right: 30px;
     margin-bottom: 20px;
   }
 
-  .recommend a:hover{
+  .recommend button:hover{
     transform: scale(1.01);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease;
