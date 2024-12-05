@@ -57,6 +57,7 @@ function App() {
     setLoggedInUser(null);
     setDropdownOpen(false);
     localStorage.removeItem('loggedInUser');
+    navigate('/');
   };
 
   const toggleDropdown = () => {
@@ -66,7 +67,7 @@ function App() {
   const handleRestrictedAccess = (event, path, state = {}) => {
     event.preventDefault();
     if (loggedInUser) {
-      navigate(path, { state });  // ส่งค่า state ไปด้วย
+      navigate(path, { state });
     } else {
       openLoginModal();
     }
