@@ -8,20 +8,24 @@ function Topup() {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [truemoneyLink, setTruemoneyLink] = useState('');
 
+  //เช็คว่าผู้ใช้อัปโหลดไฟล์รึยัง
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setUploadedFile(e.target.files[0]);
     }
   };
 
+  //ลบ ยกเลิกไฟล์ที่อัปโหลด
   const handleRemoveFile = () => {
     setUploadedFile(null);
   };
 
+  //เช็คว่าผู้ใช้กรอกลิงก์รึยัง
   const handleTruemoneyChange = (e) => {
     setTruemoneyLink(e.target.value);
   };
 
+  //หน้าเว็บ
   const renderContent = () => {
     switch (activeOption) {
       case 'truemoney':
@@ -37,8 +41,7 @@ function Topup() {
             />
             <button 
               className={`confirm-button ${!truemoneyLink ? 'disabled' : ''}`} 
-              disabled={!truemoneyLink}
-            >
+              disabled={!truemoneyLink}>
               ยืนยันการเติมเงิน
             </button>
           </div>

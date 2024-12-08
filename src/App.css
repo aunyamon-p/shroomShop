@@ -163,6 +163,12 @@ li.logout {
   margin-left: 0px;
   color: #ffffff;
   text-align: left;
+  font-weight: normal;
+}
+
+.dropdown-menu li.curr-money:hover{
+  background-color: #1c1f25;
+  cursor:context-menu;
 }
 
 .dropdown-menu li:hover {

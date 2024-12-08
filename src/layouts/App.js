@@ -22,30 +22,36 @@ function App() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const [topuphtr, setTopup] = useState([]);
+  const [buyhtr, setBuyHistory] = useState([]);
+  const [currMoney, setCurrMoney] = useState(0);
 
+  //บันทึกข้อมูลของผู้ใช้ที่มีการเข้าสู่ระบบไว้
   useEffect(() => {
     const savedUser = localStorage.getItem('loggedInUser');
-    if (savedUser) {
-      setLoggedInUser(savedUser);
-    }
+    if (savedUser) setLoggedInUser(savedUser);
   }, []);
 
+  //เปิดหน้าต่างเข้าสู่ระบบ
   const openLoginModal = () => {
     setLoginOpen(true);
     setRegisterOpen(false);
   };
 
+  //เปิดหน้าต่างลงทะเบียน
   const openRegisterModal = () => {
     setRegisterOpen(true);
     setLoginOpen(false);
   };
 
+  //ปุ่มกากบาทเพื่อปิดหน้าต่าง
   const closeModal = () => {
     setLoginOpen(false);
     setRegisterOpen(false);
     setContactOpen(false);
   };
 
+  //เก็บ username ผู้ใช้ที่เข้าสู่ระบบไว้แสดง
   const handleLoginSuccess = (username) => {
     setLoggedInUser(username);
     setDropdownOpen(false);
@@ -53,17 +59,7 @@ function App() {
     closeModal();
   };
 
-  const handleLogout = () => {
-    setLoggedInUser(null);
-    setDropdownOpen(false);
-    localStorage.removeItem('loggedInUser');
-    navigate('/');
-  };
-
-  const toggleDropdown = () => {
-    setDropdownOpen((prev) => !prev);
-  };
-
+  //เช็คว่าเข้าสู่ระบบสำเร็จมั้ย
   const handleRestrictedAccess = (event, path, state = {}) => {
     event.preventDefault();
     if (loggedInUser) {
@@ -73,28 +69,75 @@ function App() {
     }
   };
 
+  //กดออกจากระบบ
+  const handleLogout = () => {
+    setLoggedInUser(null);
+    setDropdownOpen(false);
+    localStorage.removeItem('loggedInUser');
+    navigate('/');
+  };
+
+
+  const toggleDropdown = () => {
+    setDropdownOpen((prev) => !prev);
+  };
+
+  //ให้แสดงหน้าเว็บบนสุดก่อนเสมอ
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [navigate]);
 
+  //Dropdown-menu เมื่อเข้าสู่ระบบแล้ว
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
       }
     };
-
     if (isDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
     }
-
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isDropdownOpen]);
 
+  //ดึงข้อมูลประวัติการซื้อจากไฟล์ buyhistory.json
+  useEffect(() => {
+    fetch('http://localhost:5000/api/buyhistory')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => setBuyHistory(data))
+      .catch((error) => console.error('Error fetching buy history:', error));
+  }, []);
+
+  //ดึงข้อมูลประวัติการเติมเงินจากไฟล์ topuphistory.json
+  useEffect(() => {
+    fetch('http://localhost:5000/api/topuphistory')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => setTopup(data))
+      .catch((error) => console.error('Error fetching products:', error));
+  }, []);
+
+  //คำนวณยอดเงินปัจจุบัน
+  useEffect(() => {
+    const totalTopup = topuphtr.reduce((sum, item) => sum + parseFloat(item.amount), 0);
+    const totalSpent = buyhtr.reduce((sum, item) => sum + parseFloat(item.price), 0); 
+    setCurrMoney(totalTopup - totalSpent);
+  }, [topuphtr, buyhtr]);
+
+  //หน้าเว็บ
   return (
     <div className="App">
       <header className="App-header">
@@ -132,6 +175,7 @@ function App() {
                 {loggedInUser} ▼
                 {isDropdownOpen && (
                   <ul className="dropdown-menu">
+                    <li className='curr-money'>🪙 {currMoney}฿</li>
                     <li><a href="/topuphistory">ประวัติการเติมเงิน</a></li>
                     <li><a href="/buyhistory">ประวัติการซื้อ</a></li>
                     <li className="logout" onClick={handleLogout}>
@@ -158,10 +202,9 @@ function App() {
           </video>
         </div>
         <div className="content-overlay">
-          <Outlet context={{ handleRestrictedAccess }} />
+          <Outlet context={{ handleRestrictedAccess, loggedInUser, currMoney }} />
         </div>
       </main>
-
 
       {isLoginOpen && <Login onClose={closeModal} openRegisterModal={openRegisterModal} onLoginSuccess={handleLoginSuccess} />}
       {isRegisterOpen && <Register onClose={closeModal} openLoginModal={openLoginModal} onLoginSuccess={handleLoginSuccess} />}

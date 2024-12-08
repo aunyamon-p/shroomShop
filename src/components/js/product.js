@@ -2,31 +2,35 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import '../../layouts/App';
 import "../css/product.css";
+import ConfirmOrder from "./confirmorder";
 
 function Product() {
   const location = useLocation();
   const { product } = location.state || {}; 
   const [quantity, setQuantity] = useState(1);
+  const [isConfirmOpen, setConfirmOpen] = useState(false);
 
+  //ปุ่มเพิ่มจำนวนสินค้า
   const handleIncrease = () => {
     if (quantity < product.stock) {
       setQuantity((prev) => prev + 1);
     }
   };
 
+  //ปุ่มลดจำนวนสินค้า
   const handleDecrease = () => {
     if (quantity > 1) setQuantity((prev) => prev - 1);
   };
 
-  const handleBuy = () => {
-    alert(`คุณได้เลือกซื้อจำนวน ${quantity} ชิ้น`);
+  //ปุ่มยกเลิกในหน้าต่างยืนยันคำสั่งซื้อ
+  const closeModal = () => {
+    setConfirmOpen(false);
   };
 
- 
+  //หน้าเว็บ
   if (!product) {
       return <div>ไม่พบข้อมูลสินค้า</div>;
     }
-
     return (
       <div className="container">
         <div className="left-section">
@@ -58,8 +62,11 @@ function Product() {
             />
             <button className="quantity-btn" onClick={handleIncrease} disabled={quantity >= product.stock}>+</button>
           </div>
-          <button className="buy-button" onClick={handleBuy}>สั่งซื้อสินค้า</button>
+          <button className="buy-button" onClick={() => setConfirmOpen(true)}>สั่งซื้อสินค้า</button>
         </div>
+
+        {isConfirmOpen && <ConfirmOrder onClose={closeModal} />}
+        
       </div>
   );
 }

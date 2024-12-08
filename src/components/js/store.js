@@ -8,6 +8,7 @@ function Store() {
   const navigate = useNavigate();
   const { handleRestrictedAccess } = useOutletContext();
 
+  //ดึงข้อมูลสินค้าทั้งหมดจากไฟล์ product.json
   useEffect(() => {
     fetch('http://localhost:5000/api/product')
       .then((response) => {
@@ -20,13 +21,14 @@ function Store() {
       .catch((error) => console.error('Error fetching products:', error));
   }, []);
 
+  //เมื่อคลิกเลือกสินค้า จะแสดงข้อมูลของสินค้านั้นๆ
   const handleProductClick = (product, e) => {
     e.preventDefault();
     console.log('Selected product:', product);
-    handleRestrictedAccess(e, '/product', { product });  // ส่ง product ไปยังหน้า /product
+    handleRestrictedAccess(e, '/product', { product });
   };
   
-
+  //หน้าเว็บ
   return (
     <div className="recommend">
       <p>สินค้าทั้งหมด<hr /></p>

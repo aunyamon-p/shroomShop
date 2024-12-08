@@ -6,6 +6,7 @@ import Line from '../../assets/line.png';
 import Discord from '../../assets/discord.png';
 import Logo from '../../assets/logo.png';
 
+//หน้าเว็บ
 function Contact({ onClose }) {
   return (
     <div className="modaloverlay">

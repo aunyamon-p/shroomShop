@@ -8,7 +8,6 @@ function Register({ onClose, openLoginModal, onLoginSuccess }) {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    // const [successMessage, setSuccessMessage] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,7 +29,6 @@ function Register({ onClose, openLoginModal, onLoginSuccess }) {
             const data = await response.json();
 
             if (response.ok) {
-                // setSuccessMessage('ลงทะเบียนสำเร็จ');
                 setErrorMessage('');
                 onLoginSuccess(username);
                 onClose();
@@ -53,7 +51,6 @@ function Register({ onClose, openLoginModal, onLoginSuccess }) {
                       <h2>ลงทะเบียน</h2>
 
                       {errorMessage && <p className='errormessage'><img src={Error} style={{width: '17px', marginRight: '10px'}}/>{errorMessage}</p>}
-                      {/* {successMessage && <p className='successmessage' style={{ color: 'green' }}>{successMessage}</p>} */}
 
                       <div className="form-group">
                           <label htmlFor="username">ชื่อผู้ใช้</label>
